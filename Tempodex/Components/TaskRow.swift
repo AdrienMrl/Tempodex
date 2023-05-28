@@ -149,7 +149,7 @@ struct PlayButton: View {
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TaskRow(task: sampleTask, playing: .constant(nil))
+            TaskRow(task: a, playing: .constant(nil))
 //            Text("\(TaskRow(task: sampleTask, playing: .constant(nil)).totalWorkToDo)")
         }
     }
