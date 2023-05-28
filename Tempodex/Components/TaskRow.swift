@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct WorkRange {
+struct WorkRange: Codable {
     let start: Date
     var end: Date?
 }
 
-struct Task: Identifiable {
+struct Task: Identifiable, Codable {
     let id: UUID
     let name: String
     let targetWork: [TimeInterval] // how much time to work each day, array is for the days of the week
@@ -25,17 +25,24 @@ struct Task: Identifiable {
         save()
     }
     
-    func stopWork() {
-        if var lastTimeWorked = timeWorked.last {
+    mutating func stopWork() {
+        if let lastTimeWorked = timeWorked.last {
             if lastTimeWorked.end == nil {
-                lastTimeWorked.end = Date()
+                self.timeWorked[self.timeWorked.count - 1].end = Date()
             }
         }
         save()
     }
     
+    static func load(name: String) -> Task {
+        let saved = UserDefaults.standard.object(forKey: name) as! Data
+        return try! JSONDecoder().decode(Task.self, from: saved)
+    }
+    
     func save() {
-        print("TODO")
+        let encoder = JSONEncoder()
+        UserDefaults.standard.set(try! encoder.encode(self), forKey: self.name)
+        print("saved!")
     }
 }
 

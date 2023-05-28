@@ -9,19 +9,26 @@ import SwiftUI
 
 let oneHourAndAHalf: TimeInterval = 90 * 60
 let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-let sampleTask = Task(id: UUID(),
-                      name: "Clean the kitchen",
-                      targetWork: [oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, 0],
-                      taskCreationDate: Date(),
-                      timeWorked: [])
+let sampleTasks = Task(id: UUID(),
+                       name: "Clean the kitchen",
+                       targetWork: [oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, oneHourAndAHalf, 0],
+                       taskCreationDate: Date(),
+                       timeWorked: [])
 
 struct ContentView: View {
     @State private var taskPlayed: UUID? = nil
     
     var body: some View {
         VStack {
-            TaskRow(task: sampleTask, playing: $taskPlayed)
+            TaskRow(task: a, playing: $taskPlayed)
+            TaskRow(task: b, playing: $taskPlayed)
+            TaskRow(task: c, playing: $taskPlayed)
+            TaskRow(task: d, playing: $taskPlayed)
         }
+    }
+    
+    func loadTasks() -> [Task] {
+        return [Task.load(name: sampleTask.name)]
     }
 }
 
