@@ -51,6 +51,13 @@ struct ContentView: View {
         List([a, b, c, d, e].map { item in item.name }, id: \.self) { name in
             TaskRow(task: Task.load(name: name), playing: $taskPlayed)
         }
+//        List {
+//            TaskRow(task: a, playing: $taskPlayed)
+//            TaskRow(task: b, playing: $taskPlayed)
+//            TaskRow(task: c, playing: $taskPlayed)
+//            TaskRow(task: d, playing: $taskPlayed)
+//            TaskRow(task: e, playing: $taskPlayed)
+//        }
     }
     
 //    func loadTasks() -> [Task] {

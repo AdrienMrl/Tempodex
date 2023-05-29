@@ -42,7 +42,6 @@ struct Task: Identifiable, Codable {
     func save() {
         let encoder = JSONEncoder()
         UserDefaults.standard.set(try! encoder.encode(self), forKey: self.name)
-        print("saved!")
     }
 }
 
@@ -85,10 +84,19 @@ struct TaskRow: View {
         return totalTime
     }
     
+    private func getDaysBetween(from date: Date, to currentDate: Date) -> Int {
+        let calendar = Calendar.current
+        
+        let dayFromDate = calendar.startOfDay(for: date)
+        let dayToDate = calendar.startOfDay(for: currentDate)
+
+        let components = calendar.dateComponents([.day], from: dayFromDate, to: dayToDate)
+        return components.day ?? 0
+    }
+    
     var totalWorkToDo: TimeInterval {
         var totalTime: TimeInterval = 0
-        let components = Calendar.current.dateComponents([.day], from: task.taskCreationDate, to: Date())
-        let elapsedDays = components.day!
+        let elapsedDays = getDaysBetween(from: task.taskCreationDate, to: Date())
 
         for day in 0...elapsedDays {
             let dayOfWork = Calendar.current.date(byAdding: .day, value: day, to: task.taskCreationDate)!
