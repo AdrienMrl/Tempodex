@@ -45,11 +45,34 @@ let e = Task(id: UUID(),
              timeWorked: [])
 
 struct ContentView: View {
+    private let tasksSample = [a, b, c, d, e]
     @State private var taskPlayed: UUID? = nil
+    @State private var tasks: [Task] = []
+    
+    func checkForRunningTask() {
+        for var task in tasks {
+            if task.isRunning {
+                if taskPlayed == nil {
+                    taskPlayed = task.id
+                } else {
+                    task.stopWork()
+                }
+            }
+        }
+    }
+     
+    func loadTasks() {
+        for name in tasksSample.map({ $0.name }) {
+            self.tasks.append(Task.load(name: name))
+        }
+    }
     
     var body: some View {
-        List([a, b, c, d, e].map { item in item.name }, id: \.self) { name in
-            TaskRow(task: Task.load(name: name), playing: $taskPlayed)
+        List(tasks, id: \.id) { task in
+            TaskRow(task: task, playing: $taskPlayed)
+        }.onAppear() {
+            loadTasks()
+            checkForRunningTask()
         }
 //        List {
 //            TaskRow(task: a, playing: $taskPlayed)

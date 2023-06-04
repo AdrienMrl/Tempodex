@@ -19,6 +19,13 @@ struct Task: Identifiable, Codable {
     let taskCreationDate: Date
     var timeWorked: [WorkRange]
     
+    var isRunning: Bool {
+        guard let lastWorkSession = timeWorked.last else {
+            return false
+        }
+        return lastWorkSession.end == nil
+    }
+    
     mutating func startWork() {
         stopWork()
         timeWorked.append(WorkRange(start: Date()))
@@ -26,10 +33,8 @@ struct Task: Identifiable, Codable {
     }
     
     mutating func stopWork() {
-        if let lastTimeWorked = timeWorked.last {
-            if lastTimeWorked.end == nil {
-                self.timeWorked[self.timeWorked.count - 1].end = Date()
-            }
+        if isRunning {
+            self.timeWorked[self.timeWorked.count - 1].end = Date()
         }
         save()
     }
@@ -137,6 +142,16 @@ struct TaskRow: View {
                 }
             }
         }.padding(20)
+            .onAppear() {
+                if playing == task.id {
+                    startTimer()
+                }
+            }
+            .onChange(of: playing) { newValue in
+                if let newValue, newValue != task.id {
+                    stopTimer()
+                }
+            }
     }
 }
 
