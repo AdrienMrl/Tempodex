@@ -12,11 +12,21 @@ struct WorkRange: Codable {
     var end: Date?
 }
 
-struct Task: Identifiable, Codable {
+class Task: Identifiable, Codable {
+    internal init(id: UUID, name: String, targetWork: [TimeInterval], taskCreationDate: Date, workOffset: TimeInterval, timeWorked: [WorkRange]) {
+        self.id = id
+        self.name = name
+        self.targetWork = targetWork
+        self.taskCreationDate = taskCreationDate
+        self.workOffset = workOffset
+        self.timeWorked = timeWorked
+    }
+    
     let id: UUID
     let name: String
     let targetWork: [TimeInterval] // how much time to work each day, array is for the days of the week
     let taskCreationDate: Date
+    var workOffset: TimeInterval
     var timeWorked: [WorkRange]
     
     var isRunning: Bool {
@@ -26,27 +36,34 @@ struct Task: Identifiable, Codable {
         return lastWorkSession.end == nil
     }
     
-    mutating func startWork() {
+    func startWork() {
         stopWork()
         timeWorked.append(WorkRange(start: Date()))
         save()
     }
     
-    mutating func stopWork() {
+    func stopWork() {
         if isRunning {
             self.timeWorked[self.timeWorked.count - 1].end = Date()
         }
         save()
     }
     
-    static func load(name: String) -> Task {
-        let saved = UserDefaults.standard.object(forKey: name) as! Data
+    static func load(name: String) -> Task? {
+        guard let saved = UserDefaults.standard.object(forKey: name) as? Data else {
+            return nil
+        }
         return try! JSONDecoder().decode(Task.self, from: saved)
     }
     
     func save() {
         let encoder = JSONEncoder()
         UserDefaults.standard.set(try! encoder.encode(self), forKey: self.name)
+    }
+    
+    func addTime(_ time: TimeInterval) {
+        workOffset += time
+        save()
     }
 }
 
@@ -109,7 +126,7 @@ struct TaskRow: View {
             let workTargetForThatDay = task.targetWork[dayOfTheWeek]
             totalTime += workTargetForThatDay
         }
-        return totalTime
+        return totalTime + task.workOffset
     }
     
     var pendingWorkToDo: TimeInterval {
@@ -165,14 +182,14 @@ struct PlayButton: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
-        }
+        }.buttonStyle(PlainButtonStyle())
     }
 }
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TaskRow(task: a, playing: .constant(nil))
+            TaskRow(task: b, playing: .constant(nil))
 //            Text("\(TaskRow(task: sampleTask, playing: .constant(nil)).totalWorkToDo)")
         }
     }

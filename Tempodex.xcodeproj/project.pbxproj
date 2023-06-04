@@ -12,6 +12,8 @@
 		202F4CD22A1BDFF20030BC82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 202F4CD12A1BDFF20030BC82 /* Assets.xcassets */; };
 		202F4CD52A1BDFF20030BC82 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 202F4CD42A1BDFF20030BC82 /* Preview Assets.xcassets */; };
 		2048254E2A23CD8D00377E20 /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2048254D2A23CD8D00377E20 /* TaskRow.swift */; };
+		207E44452A2C232A0068F181 /* AddTaskScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E44442A2C232A0068F181 /* AddTaskScreen.swift */; };
+		207E44472A2C251E0068F181 /* TaskDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E44462A2C251E0068F181 /* TaskDetailsScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		202F4CD12A1BDFF20030BC82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		202F4CD42A1BDFF20030BC82 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2048254D2A23CD8D00377E20 /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
+		207E44442A2C232A0068F181 /* AddTaskScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddTaskScreen.swift; path = Tempodex/Components/AddTaskScreen.swift; sourceTree = "<group>"; };
+		207E44462A2C251E0068F181 /* TaskDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskDetailsScreen.swift; path = Tempodex/Components/TaskDetailsScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,8 @@
 		202F4CC12A1BDFF10030BC82 = {
 			isa = PBXGroup;
 			children = (
+				207E44462A2C251E0068F181 /* TaskDetailsScreen.swift */,
+				207E44442A2C232A0068F181 /* AddTaskScreen.swift */,
 				202F4CCC2A1BDFF10030BC82 /* Tempodex */,
 				202F4CCB2A1BDFF10030BC82 /* Products */,
 			);
@@ -150,6 +156,8 @@
 			files = (
 				2048254E2A23CD8D00377E20 /* TaskRow.swift in Sources */,
 				202F4CD02A1BDFF10030BC82 /* ContentView.swift in Sources */,
+				207E44452A2C232A0068F181 /* AddTaskScreen.swift in Sources */,
+				207E44472A2C251E0068F181 /* TaskDetailsScreen.swift in Sources */,
 				202F4CCE2A1BDFF10030BC82 /* TimeRippleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
