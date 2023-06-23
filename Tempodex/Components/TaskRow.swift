@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct WorkRange: Codable {
     let start: Date
@@ -72,6 +73,7 @@ struct TaskRow: View {
     @State var timer: Timer? = nil
     @State var pendingWork: TimeInterval?
     @Binding var playing: UUID?
+    @Environment(\.scenePhase) var scenePhase
     
     func startTimer() {
         stopTimer()
@@ -159,6 +161,11 @@ struct TaskRow: View {
                 }
             }
         }.padding(20)
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .active {
+                    pendingWork = pendingWorkToDo
+                }
+            }
             .onAppear() {
                 if playing == task.id {
                     startTimer()
